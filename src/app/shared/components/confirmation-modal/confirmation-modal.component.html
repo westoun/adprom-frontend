@@ -1,0 +1,13 @@
+<clr-modal [(clrModalOpen)]="open"
+  [clrModalStaticBackdrop]="false"
+  (clrModalOpenChange)="onOpenChanged($event)"
+>
+  <h3 class="modal-title">{{title || ''}}</h3>
+  <div class="modal-body">
+      <p>{{text}}</p>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="onCanceled()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="onConfirmed()">Confirm</button>
+  </div>
+</clr-modal>

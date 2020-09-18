@@ -1,0 +1,100 @@
+<clr-modal
+  [(clrModalOpen)]="open"
+  [clrModalStaticBackdrop]="false"
+  (clrModalOpenChange)="onOpenChanged($event)"
+  [clrModalSize]="'lg'"
+  *ngIf="task"
+>
+  <h3 class="modal-title" style="display: flex; justify-content: space-between">
+    <span></span>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" (click)="onToggleTask()">
+        <span *ngIf="!task.completed">
+          Mark Completed
+        </span>
+        <span *ngIf="task.completed">
+          Mark Uncompleted
+        </span>
+      </button>
+      <button class="btn btn-warning-outline" (click)="onDeleteTask()">
+        Delete Task
+      </button>
+    </div>
+  </h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label for="modal-task-title">Task Title</label>
+        <input
+          clrInput
+          type="text"
+          name="modal-task-title"
+          placeholder="insert task title here..."
+          [(ngModel)]="task.title"
+          style="width: 100%;"
+        />
+      </clr-input-container>
+
+      <div class="clr-form-control clr-row">
+          <label for="modal-project" class="clr-control-label">Task Project</label>
+          <div class="clr-control-container">
+            <button class="btn btn-sm btn-link" (click)="onNavigateToProject()" style="margin: 0; border: 0;">{{task.project.title}}
+              <clr-icon shape="pop-out"></clr-icon>
+            </button>
+          </div>
+      </div>
+
+      <clr-date-container>
+        <label for="modal-task-date">Due Date</label>
+        <input type="date" [(clrDate)]="task.date" name="modal-task-date" style="width: 100%;">
+      </clr-date-container>
+
+      <clr-textarea-container>
+        <label for="modal-task-description">Task Description</label>
+        <textarea
+          clrTextarea
+          name="modal-task-description"
+          placeholder="insert task description here..."
+          [(ngModel)]="task.description"
+          style="width: 100%;"
+        >
+        </textarea>
+      </clr-textarea-container>
+      <clr-select-container *ngIf="task.taskType">
+        <label>Task Type</label>
+        <select
+          clrSelect
+          name="options"
+          [(ngModel)]="task.taskType.taskTypeId"
+          style="width: 100%;"
+        >
+          <option [value]="type.taskTypeId" *ngFor="let type of taskTypes">{{
+            type.title
+          }}</option>
+        </select>
+      </clr-select-container>
+      <!-- <clr-input-container>
+                <label for="priority">Task Priority ({{task.priority}})</label>
+                <input
+                  clrInput
+                  type="range"
+                  min="0"
+                  max="5"
+                  step="1"
+                  name="priority"
+                  [(ngModel)]="task.priority"
+                  style="width: 100%;"
+                />
+              </clr-input-container> -->
+    </form>
+  </div>
+</clr-modal>
+
+<app-confirmation-modal
+  *ngIf="task"
+  [title]="'DELETE TASK: ' + task.title"
+  text="Are you sure that you want to delete this task? This step cannot be undone."
+  [(open)]="showDeleteTaskModal"
+  (confirm)="deleteTask()"
+></app-confirmation-modal>

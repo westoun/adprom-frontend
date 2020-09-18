@@ -1,0 +1,65 @@
+<clr-modal
+  *ngIf="project"
+  [(clrModalOpen)]="open"
+  [clrModalStaticBackdrop]="false"
+  (clrModalOpenChange)="onOpenChanged($event)"
+  [clrModalSize]="'lg'"
+  [clrModalSize]="'xl'"
+>
+<h3 class="modal-title" style="display: flex; justify-content: space-between">
+    <span></span>
+
+    <div class="btn-group">
+      <button class="btn btn-warning-outline" (click)="onDeleteProject()">
+        Delete Project
+      </button>
+    </div>
+  </h3>
+
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label for="title">Project Title</label>
+        <input
+          clrInput
+          type="text"
+          name="title"
+          placeholder="insert project title here..."
+          [(ngModel)]="project.title"
+          style="width: 100%;"
+        />
+      </clr-input-container>
+      <clr-textarea-container>
+        <label for="description">Project Description</label>
+        <textarea
+          clrTextarea
+          name="description"
+          placeholder="insert project description here..."
+          [(ngModel)]="project.description"
+          style="width: 100%;"
+        >
+        </textarea>
+      </clr-textarea-container>
+      <clr-input-container>
+        <label for="color">Project Color</label>
+        <input
+          clrInput
+          name="color"
+          [(colorPicker)]="project.color"
+          cpOutputFormat="hex"
+          style="width: 50%;"
+          [style.background]="project.color"
+        />
+      </clr-input-container>
+    </form>
+  </div>
+</clr-modal>
+
+
+<app-confirmation-modal
+  *ngIf="project"
+  [title]="'DELETE PROJECT: ' + project.title"
+  text="Are you sure that you want to delete this project? This step cannot be undone."
+  [(open)]="showDeleteProjectModal"
+  (confirm)="deleteProject()"
+></app-confirmation-modal>

@@ -1,0 +1,54 @@
+<div class="ideas">
+  <a class="card card-block clickable" *ngFor="let idea of ideas" (click)="onIdeaClick(idea)">
+    <div class="card-header">
+      {{idea.title}}
+    </div>
+    <div class="card-text">
+      {{idea.description || '[description]'}}
+    </div>
+  </a>
+
+  <a class="card card-block clickable" (click)="onCreateIdea()">
+    <div class="card-header">
+      + ADD IDEA
+    </div>
+  </a>
+</div>
+
+
+
+<clr-modal
+  *ngIf="clickedIdea"
+  [clrModalStaticBackdrop]="false"
+  [(clrModalOpen)]="showEditIdeaModal"
+  (clrModalOpenChange)="onModalStatusChanged($event)"
+  [clrModalSize]="'lg'"
+>
+  <h3 class="modal-title">EDIT Idea</h3>
+  <div class="modal-body">
+    <form clrForm>
+      <clr-input-container>
+        <label for="title">Idea Title</label>
+        <input
+          clrInput
+          type="text"
+          name="title"
+          placeholder="insert Idea title here..."
+          [(ngModel)]="clickedIdea.title"
+          style="width: 100%;"
+        />
+      </clr-input-container>
+      <clr-textarea-container>
+        <label for="description">Idea Description</label>
+        <textarea
+          clrTextarea
+          name="description"
+          placeholder="insert Idea description here..."
+          [(ngModel)]="clickedIdea.description"
+          style="width: 100%;"
+        >
+        </textarea>
+      </clr-textarea-container>
+    </form>
+  </div>
+</clr-modal>

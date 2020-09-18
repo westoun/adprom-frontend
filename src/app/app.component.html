@@ -1,0 +1,162 @@
+<div class="container">
+  <!-- SIDENAV -->
+
+  <nav class="sidenav" *ngIf="showSideNav">
+    <div class="dashboard button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['dashboard']">
+        <clr-icon shape="dashboard"></clr-icon>
+        <strong>
+          Dashboard
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="tasks button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['tasks']">
+        <clr-icon shape="view-list"></clr-icon>
+        <strong>
+          Tasks
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="kanban button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['kanban']">
+        <clr-icon shape="view-columns"></clr-icon>
+        <strong>
+          Kanban
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="learning-goals button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['goals']" disabled>
+        <clr-icon shape="clipboard"></clr-icon>
+        <strong>
+          Learning Goals
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="ideas button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['ideas']">
+        <clr-icon shape="lightbulb"></clr-icon>
+        <strong>
+          Project Ideas
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="wiki button-group">
+      <button class="btn btn-sm btn-link" [routerLink]="['wiki']" disabled>
+        <clr-icon shape="library"></clr-icon>
+        <strong>
+          Wiki
+        </strong>
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="projects button-group">
+      <button class="btn btn-link" [routerLink]="['projects']">
+        <clr-icon shape="folder-open"></clr-icon>
+        <strong>
+          Projects
+        </strong>
+      </button>
+
+      <button
+        *ngFor="let project of projects"
+        class="btn btn-sm btn-link"
+        [routerLink]="['projects', project.projectId]"
+      >
+        {{ project.title }}
+      </button>
+    </div>
+
+    <div class="collapse">
+      <button class="btn btn-link btn-block" (click)="toggleSideNav()">
+        <clr-icon shape="angle"></clr-icon>
+        <strong>
+          Collapse
+        </strong>
+      </button>
+    </div>
+  </nav>
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar" [ngClass]="showSideNav ? 'strip-small' : 'strip-full'">
+    <button
+      *ngIf="!showSideNav"
+      class="btn btn-icon"
+      (click)="toggleSideNav()"
+      style="display: inline; margin-left: 12px; border: 0;"
+    >
+      <clr-icon shape="bars"></clr-icon>
+    </button>
+    <div class="navbar-items">
+      <div class="navbar-links">
+        <button class="btn btn-link" [routerLink]="['dashboard']">
+          <strong>
+            Dashboard
+          </strong>
+        </button>
+        <button class="btn btn-link" [routerLink]="['projects']">
+          <strong>
+            Projects
+          </strong>
+        </button>
+        <button class="btn btn-link" [routerLink]="['tasks']">
+          <strong>
+            Tasks
+          </strong>
+        </button>
+        <button class="btn btn-link" [routerLink]="['kanban']">
+          <strong>
+            Kanban
+          </strong>
+        </button>
+      </div>
+
+      <div class="navbar-search">
+        <clr-input-container style="margin-top: 0;">
+          <input
+            clrInput
+            type="text"
+            placeholder="Search..."
+            style="color: white; width: 600px;"
+          />
+        </clr-input-container>
+      </div>
+
+      <div class="navbar-options">
+        <button class="btn btn-icon btn-link" [routerLink]="['options']">
+          <clr-icon shape="cog"></clr-icon>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div style="height: 48px; color: transparent;">a</div>
+
+    <router-outlet></router-outlet>
+
+    <app-time-log-strip
+      class="time-log-strip "
+      [ngClass]="showSideNav ? 'strip-small' : 'strip-full'"
+    ></app-time-log-strip>
+  </div>
+</div>

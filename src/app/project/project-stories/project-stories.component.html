@@ -1,0 +1,29 @@
+<div class="stories">
+  <a
+    class="card card-block clickable"
+    *ngFor="let story of stories"
+    (click)="onStoryClick(story)"
+  >
+    <div class="card-header">
+      {{ story.title }}
+    </div>
+    <div class="card-text">
+      {{ story.description || '[description]' }}
+    </div>
+  </a>
+
+  <a class="card card-block clickable" (click)="onCreateStory()">
+    <div class="card-header">
+      + Add User Story
+    </div>
+  </a>
+</div>
+
+
+<app-edit-story-modal
+  [(open)]="showEditStoryModal"
+  (openChange)="onStoryModalStatusChanged($event)"
+  [(story)]="clickedStory"
+>
+</app-edit-story-modal>
+

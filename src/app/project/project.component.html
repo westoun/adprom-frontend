@@ -1,0 +1,48 @@
+<div class="cs-container" *ngIf="project">
+
+  <h2 class="cs-header">{{project.title}}
+      <button type="button" class="btn btn-icon btn-link" style="margin: 0;" (click)="showEditProjectModal = true">
+          <clr-icon shape="cog"></clr-icon>
+      </button>
+  </h2>
+  <div style="display: flex; justify-content: center;">
+    <div class="cs-tabs-container" style="display: inline;">
+      <button class="btn btn-sm btn-link" [routerLink]="['./', 'overview']">
+        <clr-icon shape="image"></clr-icon>
+        Overview
+      </button>
+      <button class="btn btn-sm btn-link" [routerLink]="['./', 'tasks']">
+        <clr-icon shape="view-list"></clr-icon>
+        Tasks
+      </button>
+      <button class="btn btn-sm btn-link" [routerLink]="['./', 'stories']">
+        <clr-icon shape="tree-view"></clr-icon>
+        Stories
+      </button>
+      <button class="btn btn-sm btn-link" [routerLink]="['./', 'kanban']">
+        <clr-icon shape="view-columns"></clr-icon>
+        Kanban
+      </button>
+      <button class="btn btn-sm btn-link" [routerLink]="['./', 'ideas']">
+        <clr-icon shape="lightbulb"></clr-icon>
+        Ideas
+      </button>
+    </div>
+  </div>
+  <hr>
+
+
+  <div class="cs-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<app-edit-project-modal
+  [(open)]="showEditProjectModal"
+  [(project)]="project"
+  *ngIf="showEditProjectModal"
+>
+</app-edit-project-modal>
+
+
+

@@ -1,0 +1,20 @@
+<div class="cs-container">
+  <h2 class="cs-header">Active Projects</h2>
+
+  <hr>
+
+  <div class="cs-content">
+    <div class="projects">
+      <a class="card card-block clickable" *ngFor="let project of projects" [routerLink]="[project.projectId]">
+        <div class="card-header">
+          {{project.title}}
+        </div>
+        <div class="card-text">
+          {{project.description || '[description]'}}
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+

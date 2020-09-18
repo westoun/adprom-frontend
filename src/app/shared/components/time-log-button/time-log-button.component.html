@@ -1,0 +1,4 @@
+<button type="button" class="btn btn-icon" style="border-radius: 50%;" [style.border-color]="task.project && task.project.color ? 'white' : 'black'" (click)="onToggleTimeLog()">
+  <clr-icon shape="stop" class="is-solid" [style.color]="task.project && task.project.color ? 'white' : 'black'" *ngIf="isActive"></clr-icon>
+  <clr-icon shape="play" class="is-solid" [style.color]="task.project && task.project.color ? 'white' : 'black'" *ngIf="!isActive"></clr-icon>
+</button>

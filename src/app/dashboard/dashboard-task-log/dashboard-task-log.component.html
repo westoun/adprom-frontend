@@ -1,0 +1,12 @@
+<clr-datagrid>
+    <clr-dg-column>Type</clr-dg-column>
+    <clr-dg-column>Task</clr-dg-column>
+    <clr-dg-column>Project</clr-dg-column>
+
+    <clr-dg-row *ngFor="let log of taskLogs">
+        <clr-dg-cell>{{log.text}}</clr-dg-cell>
+        <clr-dg-cell>{{log.task.title}}</clr-dg-cell>
+        <clr-dg-cell>{{log.task.project.title}}</clr-dg-cell>
+    </clr-dg-row>
+
+</clr-datagrid>

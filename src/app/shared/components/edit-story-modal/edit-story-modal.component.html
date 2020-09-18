@@ -1,0 +1,112 @@
+
+<clr-modal
+*ngIf="story"
+[clrModalStaticBackdrop]="false"
+[(clrModalOpen)]="open"
+(clrModalOpenChange)="onOpenChanged($event)"
+[clrModalSize]="'lg'"
+>
+<h3 class="modal-title" style="display: flex; justify-content: space-between">
+  <span></span>
+
+  <div class="btn-group">
+
+    <button class="btn btn-warning-outline" (click)="onDeleteStory()">
+      Delete Story
+    </button>
+  </div>
+</h3>
+<div class="modal-body">
+  <form clrForm>
+    <clr-input-container>
+      <label for="title">Story Title</label>
+      <input
+        clrInput
+        type="text"
+        name="title"
+        placeholder="insert Story title here..."
+        [(ngModel)]="story.title"
+        style="width: 100%;"
+      />
+    </clr-input-container>
+
+    <div class="clr-form-control">
+        <label for="modal-project" class="clr-control-label">Story Project</label>
+        <div class="clr-control-container">
+          <button class="btn btn-sm btn-link" (click)="onNavigateToProject()" style="margin: 0; border: 0;">{{story.project.title}}
+            <clr-icon shape="pop-out"></clr-icon>
+          </button>
+        </div>
+    </div>
+
+
+    <clr-textarea-container>
+      <label for="description">Story Description</label>
+      <textarea
+        clrTextarea
+        name="description"
+        placeholder="insert Story description here..."
+        [(ngModel)]="story.description"
+        style="width: 100%;"
+      >
+      </textarea>
+    </clr-textarea-container>
+
+    <clr-input-container>
+      <label for="newtask">Tasks</label>
+      <input
+        name="newtask"
+        clrInput
+        style="width: 100%;"
+        class="task-input"
+        type="text"
+        [(ngModel)]="taskInput"
+        placeholder="+ add task"
+        (keyup.enter)="onCreateTask()"
+      />
+    </clr-input-container>
+
+    <clr-checkbox-container *ngIf="story && story.tasks && story.tasks.length">
+      <label for="tasks"></label>
+      <clr-checkbox-wrapper
+        *ngFor="let task of story.tasks"
+        style="width: 100%;"
+        title="tasks"
+      >
+        <input
+          [name]="task.taskId"
+          type="checkbox"
+          clrCheckbox
+          [ngModel]="task.completed"
+          (ngModelChange)="onToggleTask(task, $event)"
+        />
+        <label *ngIf="task.completed">
+          <a (click)="onTaskClick(task)"  class="clickable">
+            <span style="width: 600px;">
+              <del>
+                {{ task.title }} (Status: {{task.taskStatus.title}})
+              </del>
+            </span>
+          </a>
+        </label>
+        <label *ngIf="!task.completed">
+          <a (click)="onTaskClick(task)"  class="clickable">
+            <span style="width: 600px;">
+              {{ task.title }} (Status: {{task.taskStatus.title}})
+            </span>
+          </a>
+        </label>
+      </clr-checkbox-wrapper>
+    </clr-checkbox-container>
+  </form>
+</div>
+</clr-modal>
+
+
+<app-edit-task-modal
+  [(open)]="showEditTaskModal"
+  (openChange)="onTaskModalStatusChanged($event)"
+  [(task)]="clickedTask"
+></app-edit-task-modal>
+
+<app-confirmation-modal *ngIf="story" [title]="'DELETE Story: ' + story.title" text="Are you sure that you want to delete this story? This step cannot be undone." [(open)]="showDeleteStoryModal" (confirm)="deleteStory()"></app-confirmation-modal>

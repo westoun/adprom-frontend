@@ -1,0 +1,46 @@
+
+<clr-modal
+*ngIf="idea"
+[clrModalStaticBackdrop]="false"
+[(clrModalOpen)]="open"
+(clrModalOpenChange)="onOpenChanged($event)"
+>
+<h3 class="modal-title" style="display: flex; justify-content: space-between">
+  <span></span>
+
+  <div class="btn-group">
+    <button class="btn btn-warning-outline" (click)="onDeleteIdea()">Delete Idea</button>
+  </div>
+</h3>
+<div class="modal-body">
+  <form clrForm>
+    <clr-input-container>
+      <label for="title">Idea Title</label>
+      <input
+        clrInput
+        type="text"
+        name="title"
+        placeholder="insert Idea title here..."
+        [(ngModel)]="idea.title"
+        style="width: 100%;"
+      />
+    </clr-input-container>
+    <clr-textarea-container>
+      <label for="description">Idea Description</label>
+      <textarea
+        clrTextarea
+        name="description"
+        placeholder="insert Idea description here..."
+        [(ngModel)]="idea.description"
+        style="width: 100%;"
+      >
+      </textarea>
+    </clr-textarea-container>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline btn-block" (click)="onStartProject()">Start Project</button>
+</div>
+</clr-modal>
+
+<app-confirmation-modal *ngIf="idea" [title]="'DELETE Idea: ' + idea.title" text="Are you sure that you want to delete this idea? This step cannot be undone." [(open)]="showDeleteIdeaModal" (confirm)="deleteIdea()"></app-confirmation-modal>

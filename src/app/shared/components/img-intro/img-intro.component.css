@@ -1,0 +1,33 @@
+.picture {
+  height: 300px;
+  width: 100%;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+ h1 {
+  top: 30%;
+  width: 100%;
+  font-size: 1.7rem;
+  text-align: center;
+  color: white;
+  position: absolute;
+}
+
+ h3 {
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  position: absolute;
+}
+
+ .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #283639;
+  opacity: 0.6;
+}

@@ -1,0 +1,10 @@
+<div *ngIf="activeTask" class="container">
+  <div class="content">
+    <div style="font-size: 0.9rem;">
+      <strong>
+        {{activeTask.title | shorten:20}}
+      </strong>
+    </div>
+    <app-time-log-button [task]="activeTask"></app-time-log-button>
+  </div>
+</div>

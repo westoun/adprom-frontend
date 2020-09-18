@@ -1,0 +1,60 @@
+<div class="filters" style="display: flex; justify-content: space-between;">
+
+  <span></span>
+
+  <div class="filters-group">
+    <clr-dropdown *ngIf="projects.length > 1">
+      <button type="button" class="btn btn-link" clrDropdownTrigger>
+        Filter Projects
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen style="padding: 12px;">
+          <clr-checkbox-wrapper *ngFor="let filter of projectFilters">
+              <input
+                type="checkbox"
+                clrCheckbox
+                [(ngModel)]="filter.show"
+                (ngModelChange)="onUpdateFilter()"
+                name="options"
+              />
+              <label>{{ filter.ptitle }}</label>
+            </clr-checkbox-wrapper>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+
+
+
+
+  </div>
+</div>
+
+
+
+<div class="tasks">
+  <div *ngIf="projects && projects.length === 1">
+    <div class="card-header">
+        <input class="task-input" type="text" [(ngModel)]="taskInput" placeholder="+ add task" (keyup.enter)="onCreateTask()">
+    </div>
+  </div>
+  <a class="card clickable" *ngFor="let task of tasks | taskNotCompleted" (click)="onTaskClick(task)">
+    <div class="card-header">
+      <input type="checkbox" clrCheckbox [ngModel]="task.completed" (ngModelChange)="onToggleTask(task, $event)">
+      <del *ngIf="task.completed">{{ task.title }}</del>
+      <span *ngIf="!task.completed">{{ task.title }}</span>
+    </div>
+  </a>
+  <hr *ngIf="(tasks | taskCompleted).length">
+  <a class="card clickable" *ngFor="let task of tasks | taskCompleted" (click)="onTaskClick(task)">
+    <div class="card-header">
+      <input type="checkbox" clrCheckbox [ngModel]="task.completed" (ngModelChange)="onToggleTask(task)">
+      <del *ngIf="task.completed">{{ task.title }}</del>
+      <span *ngIf="!task.completed">{{ task.title }}</span>
+    </div>
+  </a>
+</div>
+
+<app-edit-task-modal
+    [(open)]="showEditTaskModal"
+    (openChange)="onTaskModalStatusChanged($event)"
+    [(task)]="clickedTask"
+  ></app-edit-task-modal>

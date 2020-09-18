@@ -1,0 +1,33 @@
+<div class="cs-container">
+    <h2 class="cs-header">Project Ideas</h2>
+
+    <hr>
+
+    <div class="cs-content">
+      <div class="ideas">
+        <a class="card card-block clickable" *ngFor="let idea of ideas" (click)="onIdeaClick(idea)">
+          <div class="card-header">
+            {{idea.title}}
+          </div>
+          <div class="card-text">
+            {{idea.description || '[description]'}}
+          </div>
+        </a>
+
+        <a class="card card-block clickable" (click)="onCreateIdea()">
+          <div class="card-header">
+              + Add Project Idea
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+
+
+<app-edit-idea-modal
+  [(open)]="showEditIdeaModal"
+  (openChange)="onIdeaModalStatusChanged($event)"
+  [(idea)]="clickedIdea"
+></app-edit-idea-modal>

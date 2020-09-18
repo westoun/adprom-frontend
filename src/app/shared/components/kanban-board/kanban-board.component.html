@@ -1,0 +1,94 @@
+
+
+<div class="filters" style="display: flex; justify-content: space-between;">
+
+  <span></span>
+
+  <div class="filters-group">
+    <clr-dropdown *ngIf="projects.length > 1">
+      <button type="button" class="btn btn-link" clrDropdownTrigger>
+        Filter Projects
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen style="padding: 12px;">
+          <clr-checkbox-wrapper *ngFor="let filter of projectFilters">
+              <input
+                type="checkbox"
+                clrCheckbox
+                [(ngModel)]="filter.show"
+                (ngModelChange)="onUpdateFilter()"
+                name="options"
+              />
+              <label>{{ filter.ptitle }}</label>
+            </clr-checkbox-wrapper>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+
+
+
+
+  </div>
+</div>
+
+
+  <div class="kanban">
+    <div class="kanban-column card" *ngFor="let status of taskStatuses">
+      <ng-container *ngIf="status.taskStatusId === 'taskStatus01'">
+        <div class="card-header">{{ status.title }}</div>
+        <div class="ngx-dnd-container card-block" ngxDroppable="firstColumn">
+          <div
+            class="ngx-dnd-item kanban-item card"
+            [ngxDraggable]="['column', 'firstColumn']"
+            [style.background]="story.project.color"
+            [style.opacity]="0.7"
+            *ngFor="let story of (stories | storyNotStarted)"
+            (drag)="onItemDrag(story)"
+            (click)="onStoryClick(story)"
+          >
+            <div
+              class="card-header"
+              [style.color]="story.project.color ? 'white' : 'black'"
+            >
+              {{ story.title }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="status.taskStatusId !== 'taskStatus01'">
+        <div class="card-header">{{ status.title }}</div>
+        <div
+          class="ngx-dnd-container card-block"
+          ngxDroppable="column"
+          (drop)="onItemDrop(status)"
+        >
+          <div
+            class="ngx-dnd-item kanban-item card"
+            [style.background]="task.project.color"
+            [style.color]="task.project.color ? 'white' : 'black'"
+            ngxDraggable
+            [style.opacity]="task.completed ? 0.2 : 0.7"
+            *ngFor="let task of (tasks | status: status)"
+            (drag)="onItemDrag(task)"
+            (click)="onTaskClick(task)"
+          >
+            <div class="card-block">
+              {{ task.title }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <app-edit-task-modal
+    [(open)]="showEditTaskModal"
+    (openChange)="onTaskModalStatusChanged($event)"
+    [(task)]="clickedTask"
+  ></app-edit-task-modal>
+
+  <app-edit-story-modal
+    [(open)]="showEditStoryModal"
+    (openChange)="onStoryModalStatusChanged($event)"
+    [(story)]="clickedStory"
+  ></app-edit-story-modal>
